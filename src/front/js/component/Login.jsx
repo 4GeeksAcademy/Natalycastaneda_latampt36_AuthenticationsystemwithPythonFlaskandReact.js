@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 
 
 const Login = () => {
-    const { actions} = useContext(Context)
+    const { actions } = useContext(Context)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [formStatus, setFormStatus] = useState({ loading: false, ready: false, message: null });
@@ -12,10 +12,10 @@ const Login = () => {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        setFormStatus({ ...formStatus, loading: true, ready: false});
+        setFormStatus({ ...formStatus, loading: true, ready: false });
 
         try {
-            const response = await fetch("https://silver-invention-9rvw47gw5743pw4-3001.app.github.dev/api/token", {
+            const response = await fetch(process.env.BACKEND_URL + `/api/token`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -39,9 +39,9 @@ const Login = () => {
     useEffect(() => {
         if (formStatus.ready === true) {
             navigate("/private")
-            
+
         }
-    },[formStatus.ready])
+    }, [formStatus.ready])
 
     return (
         <main className="d-flex flex-column gap-3 vh-100 align-items-center justify-content-center">
@@ -78,7 +78,7 @@ const Login = () => {
                 )}
                 {formStatus.message && (
                     <div
-                        className={`alert mt-3 ${formStatus.message.includes("successfully")? "alert-success": "alert-danger"}`}
+                        className={`alert mt-3 ${formStatus.message.includes("successfully") ? "alert-success" : "alert-danger"}`}
                         role="alert"
                     >
                         {formStatus.message}
@@ -87,6 +87,6 @@ const Login = () => {
             </form>
         </main>
     );
-};  
+};
 
 export default Login;

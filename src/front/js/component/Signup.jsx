@@ -9,10 +9,10 @@ const Signup = () => {
 
     const registerUser = async (e) => {
         e.preventDefault();
-        setFormStatus({ ...formStatus, loading: true, ready: false});
+        setFormStatus({ ...formStatus, loading: true, ready: false });
 
         try {
-            const response = await fetch("https://silver-invention-9rvw47gw5743pw4-3001.app.github.dev/api/users", {
+            const response = await fetch(process.env.BACKEND_URL + `/api/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -34,10 +34,10 @@ const Signup = () => {
 
     useEffect(() => {
         if (formStatus.ready === true) {
-            setTimeout (() => { navigate("/login")}, 1000) 
-            
+            setTimeout(() => { navigate("/login") }, 1000)
+
         }
-    },[formStatus.ready])
+    }, [formStatus.ready])
 
     return (
         <main className="d-flex flex-column gap-3 vh-100 align-items-center justify-content-center">
@@ -74,7 +74,7 @@ const Signup = () => {
                 )}
                 {formStatus.message && (
                     <div
-                        className={`alert mt-3 ${formStatus.message.includes("successfully")? "alert-success": "alert-danger"}`}
+                        className={`alert mt-3 ${formStatus.message.includes("successfully") ? "alert-success" : "alert-danger"}`}
                         role="alert"
                     >
                         {formStatus.message}
@@ -83,6 +83,6 @@ const Signup = () => {
             </form>
         </main>
     );
-};  
+};
 
 export default Signup;
